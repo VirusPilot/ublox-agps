@@ -1,36 +1,20 @@
- #Autor: Jesús Sánchez Sänchez (gokuhs)
- #Based on veproza proyect: https://gist.github.com/veproza/55ec6eaa612781ac29e7
 import requests
 import serial
 
-#Edit me!!
-token = "<< Your tokken >>" #Token getted from u-blox
-comPort = "<< Your GPS Module COM port >>" #GPS Com port
+comPort = "/dev/ublox9"
 
 print "Connecting to u-blox"
-r = requests.get("http://online-live1.services.u-blox.com/GetOnlineData.ashx?token=" + token + ";gnss=gps;datatype=eph,alm,aux,pos;filteronpos;format=aid", stream=True)
-print "Downloading A-GPS data"
+r = requests.get("http://online-live1.services.u-blox.com/GetOnlineData.ashx?token=myToken;gnss=gps,glo,qzss,bds,gal;datatype=eph,alm,aux", stream=True)
+print "Downloading AssistNowOnline Data"
 
-ser = serial.Serial(comPort, 9600)
-print "Waiting to GPS be free"
+ser = serial.Serial(comPort, 38400)
+
+print "Waiting for GPS"
 drainer = True
 while drainer:
     drainer = ser.inWaiting()
     ser.read(drainer)
 
-print "Writing AGPS data"
+print "Writing AssistNowOnline Data"
 ser.write(r.content)
 print "Done"
-
-buffer = True
-message = ""
-try:
-    while buffer:
-        buffer = ser.read()
-        if buffer == "$":
-            if message.startswith("$GPGGA"):
-                print message.strip()
-            message = ""
-        message = message + buffer
-except KeyboardInterrupt:
-    ser.close()
