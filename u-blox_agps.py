@@ -1,26 +1,31 @@
 
 import requests
 import serial
+import argparse
 
-#comPort = "/dev/ublox7"
-#comPort = "/dev/ublox8"
-comPort = "/dev/ublox9"
-#comPort = "/dev/ttyUSB0"
+parser = argparse.ArgumentParser(description='Retrieve aiding data and update GPS module')
+parser.add_argument('-t', '--token', required=True, help='your token to access AssistNow data site')
+parser.add_argument('-d', '--device', required=True, help='the device/port where to reach the GPS device')
 
-myToken = "<please fill in your token>"
+args = parser.parse_args()
 
-print("Connecting to u-blox")
-r = requests.get("http://online-live1.services.u-blox.com/GetOnlineData.ashx?token=" + myToken + ";gnss=gps,glo,qzss,bds,gal;datatype=eph,alm,aux", stream=True)
-print("Downloading AssistNowOnline Data")
+print('Connecting to u-blox')
 
-ser = serial.Serial(comPort, 38400)
+r = requests.get("http://online-live1.services.u-blox.com/GetOnlineData.ashx?token={args.token};gnss=gps,glo,qzss,bds,gal;datatype=eph,alm,aux", stream=True)
 
-print("Waiting for GPS")
+print('Downloading AssistNowOnline Data')
+
+ser = serial.Serial(args.device, 38400)
+
+print('Waiting for GPS')
+
 drainer = True
 while drainer:
     drainer = ser.inWaiting()
     ser.read(drainer)
 
-print("Writing AssistNowOnline Data")
+print('Writing AssistNowOnline Data')
+
 ser.write(r.content)
-print("Done")
+
+print('Done')
