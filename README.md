@@ -7,8 +7,8 @@ AssistNowOnline significantly speeds up the time to a first fix, particularily w
 - `apt install python-serial python-requests`
 
 ## Run the script via commandline, using your private Token and the intended device, e.g.
-`python3 u-blox_agps.py -t <myToken> -d /dev/ublox8` for GPYes 2.0 or
-`python3 u-blox_agps.py -t <myToken> -d /dev/ttyUSB0` for T-Beam
+- `python3 u-blox_agps.py -t <myToken> -d /dev/ublox8` for GPYes 2.0 or
+- `python3 u-blox_agps.py -t <myToken> -d /dev/ttyUSB0` for T-Beam
 
 ## Include the script in Stratux Europe
 - add `python3 u-blox_agps.py -t ... -d ...` e.g. to /root/stratux-pre-start.sh right after echo powersave or to /etc/rc.local
