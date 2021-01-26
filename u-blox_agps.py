@@ -11,7 +11,7 @@ args = parser.parse_args()
 
 print('Connecting to u-blox')
 
-r = requests.get("http://online-live1.services.u-blox.com/GetOnlineData.ashx?token={args.token};gnss=gps,glo,qzss,bds,gal;datatype=eph,alm,aux", stream=True)
+r = requests.get("http://online-live1.services.u-blox.com/GetOnlineData.ashx?token={args.token};gnss=gps,glo,qzss,bds,gal;datatype=eph,alm,aux,pos", stream=True)
 
 print('Downloading AssistNowOnline Data')
 
