@@ -5,8 +5,9 @@ AssistNowOnline significantly speeds up the time to a first fix, particularily w
 
 ## Prepare the script
 - `sudo apt install python3 python3-pip`
-- `sudo pip3 install requests`
+- `sudo pip3 uninstall serial`
 - `sudo pip3 install pyserial` (consider adding `--upgrade --force-reinstall` in case of AttributeError: module 'serial' has no attribute 'Serial')
+- `sudo pip3 install requests`
 - `sudo pip3 install argparse`
 
 ## Run the script via commandline, using your private Token and the intended device, e.g.
